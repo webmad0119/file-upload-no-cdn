@@ -13,7 +13,7 @@
       width: 100vw;
       height: 100vh;
       position: fixed;
-      top: 40px;
+      top: 0;
       left: 0;
       background-color: rgba(0, 0, 0, 0.8);
       display: block;
@@ -101,16 +101,34 @@
       similique voluptas odit praesentium a magnam iste laborum asperiores illo doloribus, saepe dicta. Eius, ea? At?</p>
   </section>
   <script>
-    function preloaderActionHandler () {
-      let obj = document.querySelector('#preloader')
-      
-      if (obj.style.display === "none"){
-        obj.style.display = "block"
-      } else {
-        obj.style.display = "none"
+    const Preloader = {
+      init: function (preloaderID) {
+        if (typeof this.preloaderObj !== 'undefined') {
+          throw new Error("Preloader has already been initialised")
+        }
+
+        this.preloaderObj = document.querySelector(`#${preloaderID}`)
+      },
+      show: function () {
+        this.preloaderObj.style.display = "block"
+      },
+      hide: function () {
+        this.preloaderObj.style.display = "none"
+      },
+      toggle: function () {
+        if (this.preloaderObj.style.display === "none") {
+          this.show()
+        } else {
+          this.hide()
+        }
       }
     }
 
+    function preloaderActionHandler() {
+      Preloader.toggle()
+    }
+
+    Preloader.init('preloader');
     document.querySelector('#preloaderActivation').onclick = preloaderActionHandler
   </script>
 </body>
